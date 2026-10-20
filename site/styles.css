@@ -50,7 +50,7 @@ img { display: block; max-width: 100%; }
 .section-frame { position: relative; border-bottom: 1px solid var(--line); }
 .section-shell { width: var(--content); margin: 0 auto; }
 .hero { min-height: min(765px, calc(100vh - 76px)); overflow: hidden; isolation: isolate; display: flex; flex-direction: column; justify-content: center; }
-.hero-art { position: absolute; z-index: -1; inset: 0; background-image: linear-gradient(90deg, #06110f 0%, rgba(6, 17, 15, .96) 22%, rgba(6, 17, 15, .45) 61%, rgba(6, 17, 15, .25) 100%), linear-gradient(0deg, #06110f 0%, transparent 42%), url('/assets/obsidian-peaks.webp'); background-position: center; background-size: cover; opacity: .92; }
+.hero-art { position: absolute; z-index: -1; inset: 0; background-image: linear-gradient(90deg, #06110f 0%, rgba(6, 17, 15, .96) 22%, rgba(6, 17, 15, .45) 61%, rgba(6, 17, 15, .25) 100%), linear-gradient(0deg, #06110f 0%, transparent 42%), url('assets/obsidian-peaks.webp'); background-position: center; background-size: cover; opacity: .92; }
 .hero::after { position: absolute; z-index: -1; inset: 0; content: ''; background: radial-gradient(circle at 29% 50%, rgba(68, 240, 213, .16), transparent 31%); }
 .hero-shell { width: var(--content); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(242px, 305px); align-items: end; gap: clamp(28px, 7vw, 96px); padding: 104px 0 94px; }
 .hero-copy { max-width: 775px; }
