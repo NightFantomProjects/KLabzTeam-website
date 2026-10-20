@@ -30,18 +30,18 @@ Update text in `site/index.html`; keep public-facing copy in HTML rather than in
 
 After an update, check the page at desktop and mobile widths, verify `mailto:contact@kasuallabz.xyz`, verify the X link, and ensure no reference to a separate project has been added. If the production origin changes, update the canonical, Open Graph, Twitter, sitemap, and robots URLs together.
 
-## Cloudflare Pages deployment
+## GitHub Pages deployment
 
-The intended production setup uses Cloudflare Pages on the existing free Cloudflare account. The Pages project should publish the `site` directory without a build step. The minimum direct-upload command is:
+`.github/workflows/deploy-pages.yml` publishes the committed `site/` directory whenever `main` changes. It uses GitHub’s official Pages actions and uploads only the static website, with no build-time secrets or credentials. GitHub Pages must be enabled once for the repository with the **GitHub Actions** publishing source; each later push to `main` deploys automatically.
 
-```bash
-npx wrangler pages deploy site --project-name kasuallabz
-```
+The workflow makes the default GitHub Pages URL available first. Verify that URL after the workflow completes before adding a custom domain. Do not change the repository’s visibility or add credentials to enable the deployment.
 
-For a Git-connected Pages project, use `NightFantomProjects/KLabzTeam-website` as the source repository, production branch `main`, build command `exit 0`, and build output directory `site`.
+## Cloudflare DNS custom domain
 
-Before attaching the custom domain, record the zone’s current DNS records. Do not alter Cloudflare Email Routing or any MX, SPF, DKIM, DMARC, email-verification, or unrelated records. Attach `kasuallabz.xyz` to the Pages project after a successful preview deployment. Configure `www.kasuallabz.xyz` to redirect to `https://kasuallabz.xyz` with a Pages domain redirect or a narrowly scoped redirect rule; do not replace an existing website DNS record without reviewing the exact change.
+Cloudflare is used only as the authoritative DNS provider. After the default GitHub Pages deployment is healthy, configure `kasuallabz.xyz` as the custom domain in the repository’s GitHub Pages settings, then add only GitHub-recommended DNS records in Cloudflare. Preserve Cloudflare Email Routing and every MX, SPF, DKIM, DMARC, email-verification, and unrelated DNS record.
+
+Add the `www` DNS hostname only after the apex domain is active, then verify that GitHub Pages redirects it to `https://kasuallabz.xyz`. If GitHub Pages does not canonicalize `www` as required, leave that hostname pending rather than adding a Cloudflare redirect feature. Do not create a Cloudflare Pages project, Worker, redirect rule, or any other Cloudflare hosting resource.
 
 ## Rollback
 
-Use Cloudflare Pages’ deployment history to roll back to a prior successful deployment. Source changes are kept in Git; revert the relevant commit with a normal new commit and redeploy. Do not force-push or delete deployment history, DNS records, or the Pages project as a rollback mechanism.
+Use GitHub Actions and GitHub Pages deployment history to identify the prior successful release. Source changes are kept in Git; revert the relevant commit with a normal new commit and push it to `main` to redeploy. Do not force-push or delete deployment history or DNS records as a rollback mechanism.

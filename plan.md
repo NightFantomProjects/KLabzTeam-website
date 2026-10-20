@@ -4,7 +4,7 @@
 
 Build a single-page, static Kasual Labz website for `https://kasuallabz.xyz`. Kasual Labz is a development team under NF Projects working on blockchain development, cryptocurrency tools, mining software, and experimental technology. The page will use only approved public copy, the three supplied brand assets, a working mailto contact link, and the verified Kasual Labz X profile. It will not mention, link to, or imply a relationship with XTM-MINER or any other separate or unannounced project.
 
-The site is intentionally static: no account system, database, contact-form backend, analytics, paid APIs, or additional service dependencies. It will be deployed to a free Cloudflare Pages project after preview verification, with HTTPS on the apex domain and a `www` redirect where Cloudflare’s free configuration supports it.
+The site is intentionally static: no account system, database, contact-form backend, analytics, paid APIs, or additional service dependencies. It will be deployed to GitHub Pages automatically from the existing repository’s `main` branch after preview verification. Cloudflare will be used only for the DNS records required to attach the apex domain and verify a `www` redirect, with HTTPS provided by GitHub Pages.
 
 ## Design direction
 
@@ -53,7 +53,9 @@ kasuallabz/
 ├── app.config.ts                 # Webdev project logo metadata
 ├── plan.md                       # This implementation and design plan
 ├── TODO.md                       # Outcome-based delivery progress
-├── README.md                     # Local development, Cloudflare deployment, updates, rollback
+├── README.md                     # Local development, GitHub Pages deployment, updates, rollback
+├── .github/workflows/
+│   └── deploy-pages.yml          # Main-branch GitHub Pages deployment workflow
 └── site/
     ├── index.html                # Content, semantics, SEO, and metadata
     ├── styles.css                # Responsive visual system and motion preferences
@@ -70,4 +72,4 @@ kasuallabz/
 
 ## Deployment approach
 
-The preview will serve `site/` at the configured port. A Cloudflare Pages project will be reused if it is already dedicated to Kasual Labz; otherwise a new Pages project will be created with no paid features. Existing DNS records, including mail-related records and Email Routing records, will be recorded before any domain work. The apex domain will be attached only after preview verification. `www.kasuallabz.xyz` will be configured to redirect to the apex without replacing protected DNS records. No nameserver, registrar, billing, account-access, token, or unrelated Cloudflare resource will be changed.
+The preview will serve `site/` at the configured port. The GitHub Actions workflow will publish the committed `site/` directory to GitHub Pages from `main`, without a build dependency. Existing Cloudflare DNS records, including mail-related and Email Routing records, were recorded before domain work. After the GitHub Pages URL has been verified, the apex domain will be attached through GitHub Pages and only the GitHub-recommended DNS records will be added at Cloudflare. The `www` hostname will be verified as a redirect to the apex through GitHub Pages; no Cloudflare Pages project, Worker, redirect rule, nameserver, registrar, billing, account-access, token, or unrelated Cloudflare resource will be changed.
